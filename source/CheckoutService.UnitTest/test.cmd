@@ -1,0 +1,1 @@
+reportgenerator -reports:"TestResults\3baa5781-fc1c-4f7c-93ff-7ec5cc8e8df8\coverage.cobertura.xml" -targetdir:"coveragereport" -reporttypes:Html

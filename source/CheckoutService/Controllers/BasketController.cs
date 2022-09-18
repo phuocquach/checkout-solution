@@ -1,4 +1,4 @@
-﻿using Checkout.Application.Basket;
+﻿using CheckoutService.Features.Basket.Handler;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -12,37 +12,44 @@ namespace CheckoutService.Controllers
         {
             
         }
-        [HttpGet]
-        public IEnumerable<string> Get()
-        {
-            return new string[] { "value1", "value2" };
-        }
 
         [HttpGet("{id}")]
-        public string Get([FromQuery]int id)
+        public async Task<ActionResult> Get([FromRoute] int id)
         {
-            return "value";
+            var result = await Mediator.Send(new GetBasket.Request
+            {
+                BasketId = id
+            });
+            return Ok(result);
         }
 
         [HttpPost]
-        public async Task<ActionResult> Post([FromBody] CreateBasketRequest request)
+        public async Task<ActionResult> Post([FromBody] CreateBasket.CreateBasketRequest request)
         {
+            var result = await Mediator.Send(request);
+
+            return Created("", new { Id = result });
+        }
+
+        [HttpPut("{id}/article-line")]
+        public async Task<ActionResult> Put([FromRoute]int id, [FromBody] AddProductBasket.Request request)
+        {
+            request.BasketId = id;
+
             var result = await Mediator.Send(request);
 
             return Ok(result);
         }
 
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
-        {
-
-        }
-
 
         [HttpPatch("{id}")]
-        public void Patch(int id, [FromBody] string value)
+        public async Task<ActionResult> Patch([FromRoute] int id, [FromBody] CloseBasket.Request request)
         {
+            request.BasketId = id;
 
+            var result = await Mediator.Send(request);
+
+            return Ok(result);
         }
     }
 }

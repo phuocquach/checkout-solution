@@ -1,10 +1,8 @@
-using Checkout.Application.Basket;
-using Checkout.Domain;
 using CheckoutService.Extension;
+using CheckoutService.Features.Basket.Handler;
+using CheckoutService.Persistence;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
-using System.Reflection;
 
 namespace CheckoutService
 {
@@ -48,8 +46,8 @@ namespace CheckoutService
 
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
-            builder.Services.AddMediatR(typeof(Program).Assembly, typeof(GetListBasketHandler).Assembly);
-            builder.Services.RegisterServicesAsScoped(typeof(Program).Assembly, typeof(GetListBasketHandler).Assembly);
+            builder.Services.AddMediatR(typeof(Program).Assembly, typeof(GetBasket).Assembly);
+            builder.Services.RegisterServicesAsScoped(typeof(Program).Assembly, typeof(GetBasket).Assembly);
         }
 
        
