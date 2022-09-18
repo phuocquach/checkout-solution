@@ -1,4 +1,4 @@
-﻿namespace Checkout.Application.Basket.Model
+﻿namespace CheckoutService.Features.Basket.Model
 {
     public class GetBasketResponse
     {
@@ -11,11 +11,5 @@
         public string Customer { get; set; }
         public bool PaysVAT { get; set; }
 
-    }
-
-    public class BasketProductDto
-    {
-        public string Item { get; set; }
-        public decimal Price { get; set; }
     }
 }

@@ -32,7 +32,7 @@ namespace CheckoutService.Controllers
         }
 
         [HttpPut("{id}/article-line")]
-        public async Task<ActionResult> Put([FromRoute]int id, [FromBody] AddBasketProductRequest request)
+        public async Task<ActionResult> Put([FromRoute]int id, [FromBody] AddProductBasket.Request request)
         {
             request.BasketId = id;
 

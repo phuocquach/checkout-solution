@@ -1,5 +1,4 @@
-﻿using Checkout.Application.Basket.Model;
-using Checkout.Application.Service;
+﻿using CheckoutService.Features.Basket.Model;
 using MediatR;
 
 namespace CheckoutService.Features.Basket.Handler

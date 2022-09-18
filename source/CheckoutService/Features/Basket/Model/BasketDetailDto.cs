@@ -1,6 +1,4 @@
-﻿using Checkout.Application.Basket.Model;
-
-namespace Checkout.Application.Service
+﻿namespace CheckoutService.Features.Basket.Model
 {
     public class BasketDetailDto
     {

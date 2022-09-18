@@ -1,9 +1,9 @@
-﻿using Checkout.Application.Basket.Model;
-using Checkout.Domain.Common;
+﻿using Checkout.Domain.Common;
+using CheckoutService.Features.Basket.Model;
 using CheckoutService.Persistence;
 using Microsoft.EntityFrameworkCore;
 
-namespace Checkout.Application.Service
+namespace CheckoutService.Features.Basket
 {
     public interface IBasketService
     {

@@ -1,5 +1,6 @@
-﻿using Checkout.Application.Service;
+﻿using CheckoutService.Features.Basket;
 using CheckoutService.Features.Basket.Handler;
+using CheckoutService.Features.Basket.Model;
 using CheckoutService.Persistence;
 using Moq;
 using Moq.EntityFrameworkCore;
