@@ -1,4 +1,4 @@
-﻿using Checkout.Application.Basket;
+﻿using CheckoutService.Features.Basket.Handler;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 

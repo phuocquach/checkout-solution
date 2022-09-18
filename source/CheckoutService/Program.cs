@@ -1,10 +1,8 @@
-using Checkout.Application.Basket;
-using Checkout.Domain;
 using CheckoutService.Extension;
+using CheckoutService.Features.Basket.Handler;
+using CheckoutService.Persistence;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
-using System.Reflection;
 
 namespace CheckoutService
 {

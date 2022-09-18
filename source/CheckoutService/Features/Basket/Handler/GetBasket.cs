@@ -2,11 +2,11 @@
 using Checkout.Application.Service;
 using MediatR;
 
-namespace Checkout.Application.Basket
+namespace CheckoutService.Features.Basket.Handler
 {
     public class GetBasket
     {
-        public class Request: IRequest<GetBasketResponse>
+        public class Request : IRequest<GetBasketResponse>
         {
             public int BasketId { get; set; }
         }

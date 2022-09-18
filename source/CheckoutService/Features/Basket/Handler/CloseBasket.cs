@@ -1,12 +1,12 @@
-﻿using Checkout.Domain;
+﻿using CheckoutService.Persistence;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
-namespace Checkout.Application.Basket
+namespace CheckoutService.Features.Basket.Handler
 {
     public class CloseBasket
     {
-        public class Request: IRequest<Unit>
+        public class Request : IRequest<Unit>
         {
             public int BasketId { get; set; }
             public bool Close { get; set; }

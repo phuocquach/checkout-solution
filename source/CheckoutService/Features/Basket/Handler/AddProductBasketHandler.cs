@@ -1,18 +1,17 @@
-﻿using Checkout.Domain;
-using Checkout.Domain.Entity;
+﻿using CheckoutService.Persistence;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
-namespace Checkout.Application.Basket
+namespace CheckoutService.Features.Basket.Handler
 {
-    public class AddBasketProductRequest: IRequest<Unit>
+    public class AddBasketProductRequest : IRequest<Unit>
     {
         public int BasketId { get; set; }
         public string Item { get; set; }
         public decimal Price { get; set; }
 
     }
-    public class AddProductBasketHandler: IRequestHandler<AddBasketProductRequest>
+    public class AddProductBasketHandler : IRequestHandler<AddBasketProductRequest>
     {
         private readonly CheckoutDBContext _dbContext;
         public AddProductBasketHandler(CheckoutDBContext dbContext)
@@ -50,7 +49,7 @@ namespace Checkout.Application.Basket
                 basket.BasketProducts = new List<BasketProduct>();
             }
 
-            basket.BasketProducts.Add(new Domain.Entity.BasketProduct
+            basket.BasketProducts.Add(new BasketProduct
             {
                 ProductName = request.Item,
                 ProductPrice = request.Price

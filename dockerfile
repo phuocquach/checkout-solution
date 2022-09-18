@@ -2,19 +2,19 @@
 
 FROM mcr.microsoft.com/dotnet/aspnet:6.0 AS base
 WORKDIR /app
-EXPOSE 80
+EXPOSE 7071
 EXPOSE 443
 
 FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
 WORKDIR /src
-COPY ["CheckoutService.csproj", "."]
+COPY ["/source/CheckoutService/CheckoutService.csproj", "."]
 RUN dotnet restore "./CheckoutService.csproj"
 COPY . .
 WORKDIR "/src/."
-RUN dotnet build "CheckoutService.csproj" -c Release -o /app/build
+RUN dotnet build "/source/CheckoutService/CheckoutService.csproj" -c Release -o /app/build
 
 FROM build AS publish
-RUN dotnet publish "CheckoutService.csproj" -c Release -o /app/publish /p:UseAppHost=false
+RUN dotnet publish "/source/CheckoutService/CheckoutService.csproj" -c Release -o /app/publish /p:UseAppHost=false
 
 FROM base AS final
 WORKDIR /app

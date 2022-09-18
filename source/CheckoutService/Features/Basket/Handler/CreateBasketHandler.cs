@@ -1,9 +1,9 @@
-﻿using Checkout.Domain;
+﻿using CheckoutService.Persistence;
 using MediatR;
 
-namespace Checkout.Application.Basket
+namespace CheckoutService.Features.Basket.Handler
 {
-    public class CreateBasketRequest: IRequest<int>
+    public class CreateBasketRequest : IRequest<int>
     {
         public string Customer { get; set; }
         public bool PaysVAT { get; set; }
@@ -20,10 +20,10 @@ namespace Checkout.Application.Basket
         {
             if (request == null || request.Customer == null)
             {
-                throw(new ArgumentNullException(nameof(request)));
+                throw new ArgumentNullException(nameof(request));
             }
 
-            var basket = new Domain.Entity.Basket
+            var basket = new Persistence.Basket
             {
                 CustomerName = request.Customer,
                 PaysVat = request.PaysVAT

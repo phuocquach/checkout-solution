@@ -1,6 +1,6 @@
 ﻿using Checkout.Application.Basket.Model;
-using Checkout.Domain;
 using Checkout.Domain.Common;
+using CheckoutService.Persistence;
 using Microsoft.EntityFrameworkCore;
 
 namespace Checkout.Application.Service
