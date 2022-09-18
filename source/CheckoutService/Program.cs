@@ -48,8 +48,8 @@ namespace CheckoutService
 
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
-            builder.Services.AddMediatR(typeof(Program).Assembly, typeof(GetListBasketHandler).Assembly);
-            builder.Services.RegisterServicesAsScoped(typeof(Program).Assembly, typeof(GetListBasketHandler).Assembly);
+            builder.Services.AddMediatR(typeof(Program).Assembly, typeof(GetBasket).Assembly);
+            builder.Services.RegisterServicesAsScoped(typeof(Program).Assembly, typeof(GetBasket).Assembly);
         }
 
        

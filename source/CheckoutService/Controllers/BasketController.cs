@@ -12,16 +12,15 @@ namespace CheckoutService.Controllers
         {
             
         }
-        [HttpGet]
-        public IEnumerable<string> Get()
-        {
-            return new string[] { "value1", "value2" };
-        }
 
         [HttpGet("{id}")]
-        public string Get([FromQuery]int id)
+        public async Task<ActionResult> Get([FromRoute] int id)
         {
-            return "value";
+            var result = await Mediator.Send(new GetBasket.Request
+            {
+                BasketId = id
+            });
+            return Ok(result);
         }
 
         [HttpPost]

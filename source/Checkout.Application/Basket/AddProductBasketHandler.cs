@@ -1,5 +1,5 @@
-﻿using Checkout.ApplicationException;
-using Checkout.Domain;
+﻿using Checkout.Domain;
+using Checkout.Domain.Entity;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
@@ -30,14 +30,24 @@ namespace Checkout.Application.Basket
             var basket = await _dbContext.Baskets
                 .SingleOrDefaultAsync(x => x.BasketId == request.BasketId, cancellationToken);
 
+            if (basket == null)
+            {
+                throw new Exception("This basket is not existed");
+            }
+
             if (basket.Close)
             {
-                throw new BadRequestException("This basket is closed");
+                throw new Exception("This basket is closed");
             }
 
             if (basket.Payed)
             {
-                throw new BadRequestException("This basket is payed");
+                throw new Exception("This basket is payed");
+            }
+
+            if (basket.BasketProducts == null)
+            {
+                basket.BasketProducts = new List<BasketProduct>();
             }
 
             basket.BasketProducts.Add(new Domain.Entity.BasketProduct

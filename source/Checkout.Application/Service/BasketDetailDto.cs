@@ -1,6 +1,8 @@
-﻿namespace Checkout.Application.Basket.Model
+﻿using Checkout.Application.Basket.Model;
+
+namespace Checkout.Application.Service
 {
-    public class GetBasketResponse
+    public class BasketDetailDto
     {
         public int Id { get; set; }
         public IEnumerable<BasketProductDto> Items { get; set; }
@@ -10,12 +12,5 @@
 
         public string Customer { get; set; }
         public bool PaysVAT { get; set; }
-
-    }
-
-    public class BasketProductDto
-    {
-        public string Item { get; set; }
-        public decimal Price { get; set; }
     }
 }
