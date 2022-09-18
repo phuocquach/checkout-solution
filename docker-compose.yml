@@ -1,0 +1,26 @@
+version: '3.5'
+
+services:
+  mssql_server:
+    container_name: mssql_server
+    image: mcr.microsoft.com/mssql/server
+    ports:
+      - "1433:1433"
+    environment:
+      SA_PASSWORD: P@ssw0rd
+      ACCEPT_EULA: Y
+    restart: unless-stopped
+
+  flyway:
+    image: flyway/flyway
+    command: -configFiles=/flyway/conf/flyway.config -url=jdbc:sqlserver://mssql_server:1433;databaseName=checkout;integratedSecurity=true;user=sa;password=P@ssw0rd migrate
+    volumes:
+      - .:/flyway/sql
+    depends_on:
+      - mssql_server
+volumes:
+    mssql_server:
+
+networks:
+  mt-network:
+    driver: bridge
