@@ -8,7 +8,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        dotnet-version: ['6.0', '6.0.x']
+        dotnet-version: ['6.0.x']
 
     steps:
       - uses: actions/checkout@v3
@@ -17,7 +17,7 @@ jobs:
         with:
           dotnet-version: ${{ matrix.dotnet-version }}
       - name: Install dependencies
-        run: dotnet restore ../../source/CheckoutService.sln
+        run: dotnet restore ./../../source/CheckoutService.sln
       - name: Build
         run: dotnet build --configuration Release --no-restore
 #      - name: Test
