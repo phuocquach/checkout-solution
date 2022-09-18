@@ -16,9 +16,10 @@ jobs:
         uses: actions/setup-dotnet@v2
         with:
           dotnet-version: ${{ matrix.dotnet-version }}
-          path: ~/checkout-solution/source
       - name: Install dependencies
-        run: dotnet restore
+        run: |
+            cd "./source"
+            dotnet restore
       - name: Build
         run: dotnet build --configuration Release --no-restore
 #      - name: Test
