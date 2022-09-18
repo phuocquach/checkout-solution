@@ -29,20 +29,28 @@ namespace CheckoutService.Controllers
         {
             var result = await Mediator.Send(request);
 
-            return Ok(result);
+            return Created("", new { Id = result });
         }
 
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        [HttpPut("{id}/article-line")]
+        public async Task<ActionResult> Put([FromRoute]int id, [FromBody] AddBasketProductRequest request)
         {
+            request.BasketId = id;
 
+            var result = await Mediator.Send(request);
+
+            return Ok(result);
         }
 
 
         [HttpPatch("{id}")]
-        public void Patch(int id, [FromBody] string value)
+        public async Task<ActionResult> Patch([FromRoute] int id, [FromBody] CloseBasket.Request request)
         {
+            request.BasketId = id;
 
+            var result = await Mediator.Send(request);
+
+            return Ok(result);
         }
     }
 }

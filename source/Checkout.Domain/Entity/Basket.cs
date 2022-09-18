@@ -10,6 +10,11 @@ namespace Checkout.Domain.Entity
         public bool PaysVat { get; set; }
 
         [InverseProperty("Basket")]
-        public IEnumerable<BasketProduct> BasketProducts;
+        public IList<BasketProduct> BasketProducts;
+
+        public bool Close { get; set; }
+
+        public bool Payed { get; set; }
+
     }
 }
