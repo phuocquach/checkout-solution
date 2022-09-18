@@ -24,7 +24,7 @@ namespace CheckoutService.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult> Post([FromBody] CreateBasketRequest request)
+        public async Task<ActionResult> Post([FromBody] CreateBasket.CreateBasketRequest request)
         {
             var result = await Mediator.Send(request);
 

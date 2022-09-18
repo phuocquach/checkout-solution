@@ -11,10 +11,10 @@ namespace CheckoutService.Features.Basket.Handler
         public decimal Price { get; set; }
 
     }
-    public class AddProductBasketHandler : IRequestHandler<AddBasketProductRequest>
+    public class AddProductBasket : IRequestHandler<AddBasketProductRequest>
     {
         private readonly CheckoutDBContext _dbContext;
-        public AddProductBasketHandler(CheckoutDBContext dbContext)
+        public AddProductBasket(CheckoutDBContext dbContext)
         {
             _dbContext = dbContext;
         }
