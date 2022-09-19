@@ -39,12 +39,7 @@ namespace CheckoutService.Features.Basket.Handler
                 var basket = await _dbContext.Baskets
                     .SingleOrDefaultAsync(x => x.BasketId == request.BasketId, cancellationToken);
 
-                if (basket == null)
-                {
-                    return null;
-                }
-
-                if (basket.Close || basket.Payed)
+                if (basket == null || basket.Close || basket.Payed)
                 {
                     throw new InvalidOperationException("Can not alter this basket");
                 }
@@ -56,7 +51,7 @@ namespace CheckoutService.Features.Basket.Handler
                     Basket = basket
                 };
 
-                basket.BasketProducts.Add(basketProduct);
+                await _dbContext.BasketProducts.AddAsync(basketProduct);
 
                 await _dbContext.SaveChangesAsync(cancellationToken);
 
