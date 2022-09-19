@@ -1,4 +1,5 @@
-﻿using CheckoutService.Persistence;
+﻿using CheckoutService.Features.Basket.Model;
+using CheckoutService.Persistence;
 using FluentValidation;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
@@ -7,7 +8,7 @@ namespace CheckoutService.Features.Basket.Handler
 {
     public class AddProductBasket
     {
-        public class AddProductBasketRequest : IRequest<Unit>
+        public class AddProductBasketRequest : IRequest<BasketProductDto>
         {
             public int BasketId { get; set; }
             public string Item { get; set; }
@@ -25,7 +26,7 @@ namespace CheckoutService.Features.Basket.Handler
             }
         }
 
-        public class Handler : IRequestHandler<AddProductBasketRequest>
+        public class Handler : IRequestHandler<AddProductBasketRequest, BasketProductDto>
         {
             private readonly CheckoutDBContext _dbContext;
             public Handler(CheckoutDBContext dbContext)
@@ -33,35 +34,33 @@ namespace CheckoutService.Features.Basket.Handler
                 _dbContext = dbContext;
             }
 
-            public async Task<Unit> Handle(AddProductBasketRequest request, CancellationToken cancellationToken)
+            public async Task<BasketProductDto> Handle(AddProductBasketRequest request, CancellationToken cancellationToken)
             {
                 var basket = await _dbContext.Baskets
                     .SingleOrDefaultAsync(x => x.BasketId == request.BasketId, cancellationToken);
 
-                if (basket == null)
+                if (basket == null || basket.Close || basket.Payed)
                 {
-                    throw new Exception("This basket is not existed");
+                    throw new InvalidOperationException("Can not alter this basket");
                 }
 
-                if (basket.Close)
-                {
-                    throw new Exception("This basket is closed");
-                }
-
-                if (basket.Payed)
-                {
-                    throw new Exception("This basket is payed");
-                }
-
-                basket.BasketProducts.Add(new BasketProduct
+                var basketProduct = new BasketProduct
                 {
                     ProductName = request.Item,
-                    ProductPrice = request.Price
-                });
+                    ProductPrice = request.Price,
+                    Basket = basket
+                };
+
+                await _dbContext.BasketProducts.AddAsync(basketProduct);
 
                 await _dbContext.SaveChangesAsync(cancellationToken);
 
-                return Unit.Value;
+                return new BasketProductDto
+                {
+                    Id = basketProduct.BasketProductId,
+                    Item = basketProduct.ProductName,
+                    Price = basketProduct.ProductPrice
+                };
             }
         }
     }

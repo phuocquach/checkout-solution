@@ -32,6 +32,7 @@ namespace CheckoutService.Infrastructure.AppInterceptor
             }
 
             var response = await next();
+
             return response;
         }
 

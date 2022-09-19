@@ -33,6 +33,11 @@ namespace CheckoutService.Features.Basket.Handler
                 var basket = await _dbContext.Baskets
                     .SingleOrDefaultAsync(x => x.BasketId == request.BasketId, cancellationToken);
 
+                if (basket == null || basket.Close)
+                {
+                    throw new InvalidOperationException("Can not alter this basket");
+                }
+
                 basket.Payed = request.Payed;
                 basket.Close = request.Close;
 

@@ -27,7 +27,8 @@ namespace CheckoutService.Features.Basket
             var items = basket.BasketProducts.Select(x => new BasketProductDto
             {
                 Item = x.ProductName,
-                Price = x.ProductPrice
+                Price = x.ProductPrice,
+                Id = x.BasketProductId
             });
             var totalNet = items.Sum(i => i.Price);
             var totalGross = totalNet + (totalNet * DefaultValue.VAT);
