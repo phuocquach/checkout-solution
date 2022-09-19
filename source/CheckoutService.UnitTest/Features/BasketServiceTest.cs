@@ -1,6 +1,7 @@
 ﻿using CheckoutService.Features.Basket;
 using CheckoutService.Features.Basket.Handler;
 using CheckoutService.Persistence;
+using Microsoft.EntityFrameworkCore;
 using Moq;
 using Moq.EntityFrameworkCore;
 
@@ -11,7 +12,8 @@ namespace CheckoutService.UnitTest.Features
         [Fact]
         public async Task GetBasket_Success()
         {
-            var mockContext = new Mock<CheckoutDBContext>();
+            var mockOPtion = new DbContextOptions<CheckoutDBContext>();
+            var mockContext = new Mock<CheckoutDBContext>(mockOPtion);
             var baskets = new List<Basket>();
             var basket = new Basket
             {

@@ -3,6 +3,11 @@ namespace CheckoutService.Persistence
 {
     public class CheckoutDBContext : DbContext
     {
+        public CheckoutDBContext(DbContextOptions<CheckoutDBContext> options)
+            : base(options)
+        {
+
+        }
         public virtual DbSet<Basket> Baskets { get; set; }
         public virtual DbSet<BasketProduct> BasketProducts { get; set; }
 

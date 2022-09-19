@@ -2,6 +2,7 @@
 using CheckoutService.Features.Basket.Handler;
 using CheckoutService.Features.Basket.Model;
 using CheckoutService.Persistence;
+using Microsoft.EntityFrameworkCore;
 using Moq;
 using Moq.EntityFrameworkCore;
 
@@ -29,7 +30,7 @@ namespace CheckoutService.UnitTest.Features
             //Test
             var handler = new GetBasket.Handler(mockContext.Object);
 
-            var result = await handler.Handle(new GetBasket.Request
+            var result = await handler.Handle(new GetBasket.GetBasketRequest
             {
                 BasketId = 1,
             }, default);
@@ -41,7 +42,8 @@ namespace CheckoutService.UnitTest.Features
         [Fact]
         public async Task HandleCreateBasket_Success()
         {
-            var mockContext = new Mock<CheckoutDBContext>();
+            var mockOPtion = new DbContextOptions<CheckoutDBContext>();
+            var mockContext = new Mock<CheckoutDBContext>(mockOPtion);
             var baskets = new List<Basket>();
 
             baskets.Add(new Basket

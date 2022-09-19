@@ -16,7 +16,7 @@ namespace CheckoutService.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult> Get([FromRoute] int id)
         {
-            var result = await Mediator.Send(new GetBasket.Request
+            var result = await Mediator.Send(new GetBasket.GetBasketRequest
             {
                 BasketId = id
             });
@@ -32,7 +32,7 @@ namespace CheckoutService.Controllers
         }
 
         [HttpPut("{id}/article-line")]
-        public async Task<ActionResult> Put([FromRoute]int id, [FromBody] AddProductBasket.Request request)
+        public async Task<ActionResult> Put([FromRoute]int id, [FromBody] AddProductBasket.AddProductBasketRequest request)
         {
             request.BasketId = id;
 
@@ -43,7 +43,7 @@ namespace CheckoutService.Controllers
 
 
         [HttpPatch("{id}")]
-        public async Task<ActionResult> Patch([FromRoute] int id, [FromBody] CloseBasket.Request request)
+        public async Task<ActionResult> Patch([FromRoute] int id, [FromBody] CloseBasket.CloseBasketRequest request)
         {
             request.BasketId = id;
 

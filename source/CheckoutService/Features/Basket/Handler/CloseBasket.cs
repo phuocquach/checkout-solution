@@ -6,21 +6,21 @@ namespace CheckoutService.Features.Basket.Handler
 {
     public class CloseBasket
     {
-        public class Request : IRequest<Unit>
+        public class CloseBasketRequest : IRequest<Unit>
         {
             public int BasketId { get; set; }
             public bool Close { get; set; }
             public bool Payed { get; set; }
         }
 
-        public class Handler : IRequestHandler<Request, Unit>
+        public class Handler : IRequestHandler<CloseBasketRequest, Unit>
         {
             private readonly CheckoutDBContext _dbContext;
             public Handler(CheckoutDBContext dbContext)
             {
                 _dbContext = dbContext;
             }
-            public async Task<Unit> Handle(Request request, CancellationToken cancellationToken)
+            public async Task<Unit> Handle(CloseBasketRequest request, CancellationToken cancellationToken)
             {
 
                 if (request == null || request.BasketId <= 0)

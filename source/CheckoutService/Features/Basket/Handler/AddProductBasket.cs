@@ -6,14 +6,14 @@ namespace CheckoutService.Features.Basket.Handler
 {
     public class AddProductBasket
     {
-        public class Request : IRequest<Unit>
+        public class AddProductBasketRequest : IRequest<Unit>
         {
             public int BasketId { get; set; }
             public string Item { get; set; }
             public decimal Price { get; set; }
 
         }
-        public class Handler : IRequestHandler<Request>
+        public class Handler : IRequestHandler<AddProductBasketRequest>
         {
             private readonly CheckoutDBContext _dbContext;
             public Handler(CheckoutDBContext dbContext)
@@ -21,7 +21,7 @@ namespace CheckoutService.Features.Basket.Handler
                 _dbContext = dbContext;
             }
 
-            public async Task<Unit> Handle(Request request, CancellationToken cancellationToken)
+            public async Task<Unit> Handle(AddProductBasketRequest request, CancellationToken cancellationToken)
             {
                 if (request == null || request.BasketId <= 0)
                 {
