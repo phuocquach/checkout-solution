@@ -25,13 +25,12 @@ namespace CheckoutService.Infrastructure.AppInterceptor
                 var validationResult = await requestValidator.ValidateAsync(request, cancellationToken);
                 if (!validationResult.IsValid)
                 {
-                    var fatalSeverity = (Severity)3;
-                    var fatalError = validationResult.Errors.FirstOrDefault(x => x.Severity == fatalSeverity);
                     throw new BadHttpRequestException("Invalid request");
                 }
             }
 
             var response = await next();
+
             return response;
         }
 
