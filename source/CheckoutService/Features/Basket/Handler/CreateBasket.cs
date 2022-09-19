@@ -1,4 +1,5 @@
 ﻿using CheckoutService.Persistence;
+using FluentValidation;
 using MediatR;
 
 namespace CheckoutService.Features.Basket.Handler
@@ -11,6 +12,16 @@ namespace CheckoutService.Features.Basket.Handler
             public bool PaysVAT { get; set; }
         }
 
+        public class CreateBasketRequestValidator : AbstractValidator<CreateBasketRequest>
+        {
+            public CreateBasketRequestValidator()
+            {
+                RuleFor(request => request).NotNull();
+                RuleFor(request => request.Customer).NotNull();
+                RuleFor(request => request.Customer).NotEmpty();
+            }
+        }
+
         public class Handler : IRequestHandler<CreateBasketRequest, int>
         {
             private readonly CheckoutDBContext _dbContext;
@@ -20,11 +31,6 @@ namespace CheckoutService.Features.Basket.Handler
             }
             public async Task<int> Handle(CreateBasketRequest request, CancellationToken cancellationToken)
             {
-                if (request == null || request.Customer == null)
-                {
-                    throw new ArgumentNullException(nameof(request));
-                }
-
                 var basket = new Persistence.Basket
                 {
                     CustomerName = request.Customer,

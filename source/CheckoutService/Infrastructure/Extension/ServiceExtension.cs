@@ -1,4 +1,5 @@
-﻿using System.Reflection;
+﻿using MediatR;
+using System.Reflection;
 
 namespace CheckoutService.Extension
 {
@@ -6,12 +7,12 @@ namespace CheckoutService.Extension
     {
         public static void RegisterServicesAsScoped(this IServiceCollection services, params Assembly[] assemblies)
         {
-            var allPublicTypes = assemblies.SelectMany(x => x.GetExportedTypes()
-                .Where(y => !y.IsAbstract && y.IsClass)).ToHashSet();
+            var allPublicTypes = assemblies.SelectMany(x => x.GetExportedTypes())
+                .Where(y => !y.IsAbstract && y.IsClass).ToHashSet();
             foreach (var item in allPublicTypes)
             {
                 var implementedInteface = item.GetTypeInfo().ImplementedInterfaces.FirstOrDefault();
-                if (implementedInteface != null)
+                if (implementedInteface != null && !implementedInteface.IsGenericType)
                 {
                     services.Add(new ServiceDescriptor(implementedInteface, item, ServiceLifetime.Scoped));
                 }

@@ -1,4 +1,5 @@
 ﻿using CheckoutService.Persistence;
+using FluentValidation;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
@@ -6,14 +7,25 @@ namespace CheckoutService.Features.Basket.Handler
 {
     public class AddProductBasket
     {
-        public class Request : IRequest<Unit>
+        public class AddProductBasketRequest : IRequest<Unit>
         {
             public int BasketId { get; set; }
             public string Item { get; set; }
             public decimal Price { get; set; }
 
         }
-        public class Handler : IRequestHandler<Request>
+
+        public class AddProductBasketRequestValidator : AbstractValidator<AddProductBasketRequest>
+        {
+            public AddProductBasketRequestValidator()
+            {
+                RuleFor(request => request.Price).GreaterThanOrEqualTo(0);
+                RuleFor(request => request.Item).NotNull();
+                RuleFor(request => request.Item).NotEmpty();
+            }
+        }
+
+        public class Handler : IRequestHandler<AddProductBasketRequest>
         {
             private readonly CheckoutDBContext _dbContext;
             public Handler(CheckoutDBContext dbContext)
@@ -21,13 +33,8 @@ namespace CheckoutService.Features.Basket.Handler
                 _dbContext = dbContext;
             }
 
-            public async Task<Unit> Handle(Request request, CancellationToken cancellationToken)
+            public async Task<Unit> Handle(AddProductBasketRequest request, CancellationToken cancellationToken)
             {
-                if (request == null || request.BasketId <= 0)
-                {
-                    throw new ArgumentNullException(nameof(request));
-                }
-
                 var basket = await _dbContext.Baskets
                     .SingleOrDefaultAsync(x => x.BasketId == request.BasketId, cancellationToken);
 
@@ -44,11 +51,6 @@ namespace CheckoutService.Features.Basket.Handler
                 if (basket.Payed)
                 {
                     throw new Exception("This basket is payed");
-                }
-
-                if (basket.BasketProducts == null)
-                {
-                    basket.BasketProducts = new List<BasketProduct>();
                 }
 
                 basket.BasketProducts.Add(new BasketProduct
