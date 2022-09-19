@@ -1,4 +1,5 @@
 ﻿using CheckoutService.Persistence;
+using FluentValidation;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
@@ -13,6 +14,17 @@ namespace CheckoutService.Features.Basket.Handler
             public decimal Price { get; set; }
 
         }
+
+        public class AddProductBasketRequestValidator : AbstractValidator<AddProductBasketRequest>
+        {
+            public AddProductBasketRequestValidator()
+            {
+                RuleFor(request => request.Price).GreaterThanOrEqualTo(0);
+                RuleFor(request => request.Item).NotNull();
+                RuleFor(request => request.Item).NotEmpty();
+            }
+        }
+
         public class Handler : IRequestHandler<AddProductBasketRequest>
         {
             private readonly CheckoutDBContext _dbContext;

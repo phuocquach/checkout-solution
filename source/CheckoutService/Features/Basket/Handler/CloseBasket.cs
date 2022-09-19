@@ -1,7 +1,7 @@
 ﻿using CheckoutService.Persistence;
+using FluentValidation;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
-
 namespace CheckoutService.Features.Basket.Handler
 {
     public class CloseBasket
@@ -13,6 +13,14 @@ namespace CheckoutService.Features.Basket.Handler
             public bool Payed { get; set; }
         }
 
+        public class CloseBasketRequestValidator : AbstractValidator<CloseBasketRequest>
+        {
+            public CloseBasketRequestValidator()
+            {
+                RuleFor(request => request.BasketId).GreaterThan(0);
+            }
+        }
+
         public class Handler : IRequestHandler<CloseBasketRequest, Unit>
         {
             private readonly CheckoutDBContext _dbContext;
@@ -22,12 +30,6 @@ namespace CheckoutService.Features.Basket.Handler
             }
             public async Task<Unit> Handle(CloseBasketRequest request, CancellationToken cancellationToken)
             {
-
-                if (request == null || request.BasketId <= 0)
-                {
-                    throw new ArgumentNullException(nameof(request));
-                }
-
                 var basket = await _dbContext.Baskets
                     .SingleOrDefaultAsync(x => x.BasketId == request.BasketId, cancellationToken);
 

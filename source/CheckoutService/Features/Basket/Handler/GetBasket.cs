@@ -22,7 +22,7 @@ namespace CheckoutService.Features.Basket.Handler
                 var basKetDetail = await _basketService.GetBasketDetail(request.BasketId, cancellationToken);
                 if (basKetDetail == null)
                 {
-                    throw new Exception("Not found exception");
+                    throw new Exception("Not found");
                 }
 
                 return new GetBasketResponse
