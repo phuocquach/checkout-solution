@@ -35,11 +35,6 @@ namespace CheckoutService.Features.Basket.Handler
 
             public async Task<Unit> Handle(AddProductBasketRequest request, CancellationToken cancellationToken)
             {
-                if (request == null || request.BasketId <= 0)
-                {
-                    throw new ArgumentNullException(nameof(request));
-                }
-
                 var basket = await _dbContext.Baskets
                     .SingleOrDefaultAsync(x => x.BasketId == request.BasketId, cancellationToken);
 
@@ -56,11 +51,6 @@ namespace CheckoutService.Features.Basket.Handler
                 if (basket.Payed)
                 {
                     throw new Exception("This basket is payed");
-                }
-
-                if (basket.BasketProducts == null)
-                {
-                    basket.BasketProducts = new List<BasketProduct>();
                 }
 
                 basket.BasketProducts.Add(new BasketProduct
