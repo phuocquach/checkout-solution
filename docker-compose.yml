@@ -21,7 +21,9 @@ services:
       - mssql_server
   checkout-service:
     build: .
+    ports:
+      - "7071:80"
       
- 
+    
 volumes:
     mssql_server:
