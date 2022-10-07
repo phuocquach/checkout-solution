@@ -1,6 +1,7 @@
 using CheckoutService.Extension;
 using CheckoutService.Features.Basket.Handler;
 using CheckoutService.Infrastructure.AppInterceptor;
+using CheckoutService.Infrastructure.Middleware;
 using CheckoutService.Persistence;
 using FluentValidation;
 using MediatR;
@@ -19,6 +20,8 @@ namespace CheckoutService
             AddServiceToBuilder(builder);
 
             var app = builder.Build();
+
+            app.UseMiddleware<ExceptionMiddleware>();
 
             app.UseSwagger();
             app.UseSwaggerUI();
@@ -44,7 +47,6 @@ namespace CheckoutService
 
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
-
             builder.Services.AddMediatR(typeof(Program).Assembly, typeof(GetBasket).Assembly);
             builder.Services.AddScoped<AddProductBasketRequestValidator>();
             builder.Services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidatorBehavior<,>));
